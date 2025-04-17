@@ -61,3 +61,41 @@ def test_category(category1):
     )
     assert Category.category_count == 1
     assert Category.product_count == 3
+
+
+def test_product_price_setter(product1):
+    product1.price = 200000.0
+    assert product1.price == 200000.0
+    product1.price = -100
+    assert product1.price == 200000.0
+
+
+def test_new_product():
+    product_data = {
+        "name": "Test Product",
+        "description": "Test Description",
+        "price": 1000.0,
+        "quantity": 10
+    }
+    product = Product.new_product(product_data)
+    assert product.name == "Test Product"
+    assert product.description == "Test Description"
+    assert product.price == 1000.0
+    assert product.quantity == 10
+
+
+def test_add_product(category1):
+    initial_products = category1.products.split('\n')  # Разделяем строку по переносам
+    initial_count = len(initial_products)
+    new_product = Product("New Product", "New Description", 500.0, 20)
+    category1.add_product(new_product)
+    updated_products = category1.products.split('\n')
+    updated_count = len(updated_products)
+    assert updated_count == initial_count + 1
+
+
+def test_products(category1):
+    products_info = category1.products
+    assert "Samsung Galaxy S23 Ultra" in products_info
+    assert "180000.0" in products_info
+    assert "Остаток: 5" in products_info
