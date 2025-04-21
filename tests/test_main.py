@@ -99,3 +99,19 @@ def test_products(category1):
     assert "Samsung Galaxy S23 Ultra" in products_info
     assert "180000.0" in products_info
     assert "Остаток: 5" in products_info
+
+
+def test_str_product(product1, product2, product3):
+    assert str(product1) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+    assert str(product2) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+    assert str(product3) == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+
+
+def test_add(product1, product2, product3):
+    assert product1 + product2 == 2580000.0
+    assert product1 + product3 == 1334000.0
+    assert product2 + product3 == 2114000.0
+
+
+def test_str_category(category1):
+    assert str(category1) == "Смартфоны, количество продуктов: 27"
