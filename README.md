@@ -4,7 +4,35 @@
 
 ## Классы
 
-### 1. Класс `Product`
+### 0. Класс `BaseProduct`
+
+**Назначение:**  
+Абстракный класс с заготовленными методами для Product
+
+### 1. Класс `Mixin`
+
+**Назначение:**  
+Класс-миксин для вывода информации об объекте при инициализации при помощи метода __repr__
+
+**Пример использования:**
+class Product(BaseProduct, Mixin):
+    def __init__(self, name: str, description: str,
+                 price: float, quantity: int):
+        self.name = name
+        self.description = description
+        self.__price = price
+        self.quantity = quantity
+        super().__init__()
+
+product1 = Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+
+Terminal
+
+Product("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5)
+
+
+
+### 2. Класс `Product` - наследник BaseProduct и Mixin
 
 **Назначение:**  
 Представляет товар в магазине.
@@ -23,7 +51,33 @@ product = Product(
     quantity=8
 )
 
-### 2. Класс Category
+### 3. Классы Smarpthone и LawnGrass - наследники Product
+
+**Назначение:**  
+Представляют товар конкретного типа в магазине.
+
+**Атрибуты:**
+Smartphone
+Те же, что и у Product.
+- `efficiency` (float) - эффективность(измеряется от 0.0 до 100.0)
+- `model` (str) - модель
+- `memory` (int) - количество памяти в ГБ
+- `color` (str) - цвет
+
+LawnGrass
+Те же, что и у Product.
+- `country` (str) - страна производства
+- `germination_period` (str) - период прорастания
+- `color` (str) - цвет
+
+**Пример использования:**
+smartphone1 = Smartphone("Samsung Galaxy S23 Ultra", "256GB, Серый цвет, 200MP камера", 180000.0, 5,
+                            95.5, "S23 Ultra", 256, "Серый")
+
+grass = LawnGrass("Газонная трава", "Элитная трава для газона", 500.0, 20, "Россия", "7 дней", "Зеленый")
+
+
+### 4. Класс Category
 Назначение:
 Группирует товары по категориям и ведет учет количества.
 
@@ -55,4 +109,6 @@ category_count (+1 за каждую новую категорию)
 
 product_count (+N за каждый добавленный продукт)
 
-Покрытие тестами составляет 100%(отчет в папке htmlcov)
+
+
+Покрытие тестами составляет 98%(отчет в папке htmlcov)
