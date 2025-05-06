@@ -1,5 +1,6 @@
 import pytest
-from main import Product, Category, Smartphone, LawnGrass
+from main import Product, Category, Smartphone, LawnGrass, BaseProduct, Mixin
+import unittest
 
 Category.category_count = 0
 Category.product_count = 0
@@ -163,3 +164,18 @@ def test_lawn_grass(lawn_grass):
     assert lawn_grass.country == "Россия"
     assert lawn_grass.germination_period == "7 дней"
     assert lawn_grass.color == "Зеленый"
+
+
+def test_base_product():
+    with unittest.TestCase().assertRaises(TypeError):
+        BaseProduct()
+
+def test_mixin_repr():
+    class Temp(Mixin):
+        def __init__(self, name, description, price, quantity):
+            self.name = name
+            self.description = description
+            self.price = price
+            self.quantity = quantity
+            super().__init__()
+    assert repr(Temp("Тест", "тест", 10000.0, 14)) == "Temp(Тест, тест, 10000.0, 14)"
