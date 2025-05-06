@@ -1,5 +1,5 @@
 import pytest
-from main import Product, Category
+from main import Product, Category, Smartphone, LawnGrass
 
 Category.category_count = 0
 Category.product_count = 0
@@ -45,7 +45,34 @@ def category1(product1, product2, product3):
     )
 
 
-def test_product(product1, product2):
+@pytest.fixture
+def smartphone():
+    return Smartphone(
+        "Xiaomi Redmi Note 11",
+        "1024GB, Синий",
+        31000.0,
+        14,
+        90.3,
+        "Note 11",
+        1024,
+        "Синий"
+    )
+
+
+@pytest.fixture
+def lawn_grass():
+    return LawnGrass(
+        "Газонная трава",
+        "Элитная трава для газона",
+        500.0,
+        20,
+        "Россия",
+        "7 дней",
+        "Зеленый"
+    )
+
+
+def test_product(product1):
     assert product1.name == "Samsung Galaxy S23 Ultra"
     assert product1.description == "256GB, Серый цвет, 200MP камера"
     assert product1.price == 180000.0
@@ -99,3 +126,40 @@ def test_products(category1):
     assert "Samsung Galaxy S23 Ultra" in products_info
     assert "180000.0" in products_info
     assert "Остаток: 5" in products_info
+
+
+def test_str_product(product1, product2, product3):
+    assert str(product1) == "Samsung Galaxy S23 Ultra, 180000.0 руб. Остаток: 5 шт."
+    assert str(product2) == "Iphone 15, 210000.0 руб. Остаток: 8 шт."
+    assert str(product3) == "Xiaomi Redmi Note 11, 31000.0 руб. Остаток: 14 шт."
+
+
+def test_add(product1, product2, product3):
+    assert product1 + product2 == 2580000.0
+    assert product1 + product3 == 1334000.0
+    assert product2 + product3 == 2114000.0
+
+
+def test_str_category(category1):
+    assert str(category1) == "Смартфоны, количество продуктов: 27"
+
+
+def test_smartphone(smartphone):
+    assert smartphone.name == "Xiaomi Redmi Note 11"
+    assert smartphone.description == "1024GB, Синий"
+    assert smartphone.price == 31000.0
+    assert smartphone.quantity == 14
+    assert smartphone.efficiency == 90.3
+    assert smartphone.model == "Note 11"
+    assert smartphone.memory == 1024
+    assert smartphone.color == "Синий"
+
+
+def test_lawn_grass(lawn_grass):
+    assert lawn_grass.name == "Газонная трава"
+    assert lawn_grass.description == "Элитная трава для газона"
+    assert lawn_grass.price == 500.0
+    assert lawn_grass.quantity == 20
+    assert lawn_grass.country == "Россия"
+    assert lawn_grass.germination_period == "7 дней"
+    assert lawn_grass.color == "Зеленый"
