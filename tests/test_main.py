@@ -47,6 +47,16 @@ def category1(product1, product2, product3):
 
 
 @pytest.fixture
+def category2():
+    return Category(
+        "Смартфоны",
+        "Смартфоны, как средство не только коммуникации, но и "
+        "получения дополнительных функций для удобства жизни",
+        []
+    )
+
+
+@pytest.fixture
 def smartphone():
     return Smartphone(
         "Xiaomi Redmi Note 11",
@@ -170,6 +180,7 @@ def test_base_product():
     with unittest.TestCase().assertRaises(TypeError):
         BaseProduct()
 
+
 def test_mixin_repr():
     class Temp(Mixin):
         def __init__(self, name, description, price, quantity):
@@ -179,3 +190,13 @@ def test_mixin_repr():
             self.quantity = quantity
             super().__init__()
     assert repr(Temp("Тест", "тест", 10000.0, 14)) == "Temp(Тест, тест, 10000.0, 14)"
+
+
+def test_exception_price():
+    with unittest.TestCase().assertRaises(ValueError):
+        Product("Имя", "Описание", 0, 10)
+
+
+def test_middle_price(category1, category2):
+    assert category1.middle_price() == 140333.0
+    assert category2.middle_price() == 0
